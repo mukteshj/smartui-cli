@@ -39,7 +39,9 @@ jobs:
 
       - name: Configure SmartUI web static
         run: smartui config:web-static urls.json
-
+      - name: xyz
+       run: npm uninstall @lambdatest/smartui-cli ;npm i @lambdatest/smartui-cli
+            
       - name: Create SmartUI web config
         run: smartui config:create-web smartui-web.json
 
