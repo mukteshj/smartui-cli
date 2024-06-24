@@ -30,4 +30,21 @@ jobs:
         run: deno lint
 
       - name: Run tests
-        run:
+        run: deno test -A
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Configure SmartUI web static
+        run: smartui config:web-static urls.json
+
+      - name: Create SmartUI web config
+        run: smartui config:create-web smartui-web.json
+
+      - name: Capture SmartUI
+        run: smartui capture urls.json --config smartui-web.json
+        env:
+          SMARTUI_USER: ${{ secrets.LAMBDATEST_USERNAME }}
+          SMARTUI_ACCESS_KEY: ${{ secrets.LAMBDATEST_ACCESS_KEY }}
