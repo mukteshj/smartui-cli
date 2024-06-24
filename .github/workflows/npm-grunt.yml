@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [18.x]
 
     steps:
     - uses: actions/checkout@v4
@@ -24,5 +24,11 @@ jobs:
 
     - name: Build
       run: |
-        npm install
-        grunt
+        npm install -g @lambdatest/smartui-cli --force
+        smartui config:web-static urls.json
+        npm uninstall @lambdatest/smartui-cli
+        npm i @lambdatest/smartui-cli
+        smartui config:create-web smartui-web.json
+        export PROJECT_TOKEN=1298164#1b2d84e5-8ca8-4ba4-bf55-9984221f6f1b#09809
+        smartui capture urls.json --config smartui-web.json
+        
